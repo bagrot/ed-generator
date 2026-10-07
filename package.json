@@ -1,0 +1,72 @@
+{
+  "name": "ed-generator",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:desktop": "powershell -ExecutionPolicy Bypass -File scripts/build-desktop.ps1",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
+    "next": "16.1.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "electron": "38.0.0",
+    "electron-builder": "26.15.2",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.4",
+    "tailwindcss": "^4"
+  },
+  "build": {
+    "appId": "ru.ed.generator",
+    "productName": "Генератор пушей",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": ".next/standalone",
+        "to": "app"
+      },
+      {
+        "from": ".next/standalone/node_modules",
+        "to": "app/node_modules"
+      },
+      {
+        "from": ".next/standalone/.next",
+        "to": "app/.next"
+      },
+      {
+        "from": "public",
+        "to": "app/public"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "ED-Generator-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Генератор пушей"
+    }
+  }
+}
